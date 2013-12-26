@@ -22,10 +22,14 @@ class Help_manual(Telnet_function):
   print "             (10.access user) (11.access password) (12.enable)\n"
   print "  : deregister_switch (switch_id, uuid)"
   print "          >> deregister the switch device in the database\n"
+  print "  : show_run (S/W ID : S/W name : management ip:port)"
+  print "          >> print out the running-configuration of the switch"
+  print "          >> choose one of S/W ID, S/W name and management ip:port\n"
 
 
  function={"-h":show_manual,
            "--help":show_manual,
            "show_switch_list":Telnet_function.show_switch_list,
            "register_switch":Telnet_function.register_switch,
-           "deregister_switch":Telnet_function.deregister_switch}
+           "deregister_switch":Telnet_function.deregister_switch,
+           "show_run":Telnet_function.show_run}
