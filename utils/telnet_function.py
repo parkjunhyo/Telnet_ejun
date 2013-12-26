@@ -112,25 +112,25 @@ class Telnet_function(Plugin_manage):
  def _insert_data_into_switch_table(self,values):
   search_domain_switch = copy.copy(self.tbentries_dict['switch'])
   value_msg = self.make_msg_according_to_type(values)
-  sending_msg = "insert into switch ("+','.join(search_domain_switch)+") values ('"+value_msg+"');"
+  sending_msg = "insert into switch ("+','.join(search_domain_switch)+") values ("+value_msg+");"
   self.send_msg([self.database_name,sending_msg])
 
  def _insert_data_into_switch_property_table(self,values):
   search_domain_switch_property = copy.copy(self.tbentries_dict['switch_property'])
   value_msg = self.make_msg_according_to_type(values)
-  sending_msg = "insert into switch ("+','.join(search_domain_switch_property)+") values ('"+value_msg+"');"
+  sending_msg = "insert into switch_property ("+','.join(search_domain_switch_property)+") values ("+value_msg+");"
   self.send_msg([self.database_name,sending_msg])
 
  def _insert_data_into_switch_status_table(self,values):
   search_domain_switch_status = copy.copy(self.tbentries_dict['switch_status'])
   value_msg = self.make_msg_according_to_type(values)
-  sending_msg = "insert into switch ("+','.join(search_domain_switch_status)+") values ('"+value_msg+"');"
+  sending_msg = "insert into switch_status ("+','.join(search_domain_switch_status)+") values ("+value_msg+");"
   self.send_msg([self.database_name,sending_msg])
 
  def _insert_data_into_switch_access_table(self,values):
   search_domain_switch_access = copy.copy(self.tbentries_dict['switch_access'])
   value_msg = self.make_msg_according_to_type(values)
-  sending_msg = "insert into switch ("+','.join(search_domain_switch_access)+") values ('"+value_msg+"');"
+  sending_msg = "insert into switch_access ("+','.join(search_domain_switch_access)+") values ("+value_msg+");"
   self.send_msg([self.database_name,sending_msg])
  
  def _register_paramter_validation_check(self,values):
@@ -181,9 +181,10 @@ class Telnet_function(Plugin_manage):
   get_switch_property = self._get_data_from_switch_property_table_by_uuid(get_switch['id'])
   get_switch_access = self._get_data_from_switch_access_table_by_uuid(get_switch['id'])
   ### re-arrange the data
-  plug_name = get_switch_property['vendor'].lower()
+  plug_vendor = get_switch_property['vendor'].lower()
+  plug_product_model = get_switch_property['product_model'].lower()
   ### run the matched plugin function
-  self.plugin_dict[plug_name]._show_run(self,get_switch,get_switch_property,get_switch_access)
+  self.plugin_dict[plug_vendor]._model_dict[plug_product_model]._show_run(self,get_switch,get_switch_property,get_switch_access)
 
  def _get_data_from_switch_table(self,values):
   search_condition = copy.copy(self.tbentries_dict['switch'])

@@ -62,7 +62,7 @@ class Common_function(Help_manual,MySQL_ejun_common.Common_function):
 
  def make_msg_according_to_type(self,values):
   listup_values = copy.copy(values)
-  msg=listup_values[0]
+  msg="'"+listup_values[0]+"'"
   listup_values.remove(listup_values[0])
   for value in listup_values:
    if type(value) == int:
