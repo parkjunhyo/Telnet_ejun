@@ -14,7 +14,6 @@ class Telnet_function:
 
   ### confirm the switch reg table is exist or not
   try:
-   self.tbentries_dict['switch'].remove('id')
    basic_msg = "select "+','.join(self.tbentries_dict['switch'])+" from switch"
   except:
    msg="[ error : "+time.asctime()+" ] there in no switch table in the "+self.database_name
@@ -23,6 +22,7 @@ class Telnet_function:
 
   ### extend the basic_msg for searching every thing
   if valid_values:
+   self.tbentries_dict['switch'].remove('id')
    search_value = valid_values[0]
    for entry in self.tbentries_dict['switch']:
     result_msg = basic_msg+" where "+entry+"='"+search_value+"';"
