@@ -1,6 +1,7 @@
 #! /usr/bin/env python
 
 import sys
+import copy
 import os
 import re
 import time
@@ -58,3 +59,18 @@ class Common_function(Help_manual,MySQL_ejun_common.Common_function):
    msg="[ error : "+time.asctime()+" ] "+value+" is "+str(type(value))
    self.logging_msg(self.run_syslog,msg)
    sys.exit()
+
+ def make_msg_according_to_type(self,values):
+  listup_values = copy.copy(values)
+  msg=listup_values[0]
+  listup_values.remove(listup_values[0])
+  for value in listup_values:
+   if type(value) == int:
+    msg = msg+","+str(value)
+   elif type(value) == str:
+    msg = msg+",'"+str(value)+"'"
+   else:
+    ## defaultly string processing
+    msg = msg+","+str(value)
+  return msg
+
