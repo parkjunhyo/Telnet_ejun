@@ -24,8 +24,9 @@ class Run_commander(Common_function):
   ### Confrim the folder status 
   self.create_directory_if_exists_not(["/".join(log_directory.split("/")[:len(log_directory.split("/"))-1]),self.log_dirname])
  
-  ### list up the table entries
-  self.tbentries_dict = self._get_table_enties_from_database(database_name)
+  ### table entries list up of database
+  self.database_name = database_name
+  self.tbentries_dict = self._get_table_enties_from_database(self.database_name)
 
  def run_command(self,values):
 

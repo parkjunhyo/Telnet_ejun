@@ -16,7 +16,7 @@ class Common_function(Help_manual,MySQL_ejun_common.Common_function):
   if not re.search(self.letter_mark_pattern,value):
    return value
   else:
-   msg="[ error : "+time.asctime()+" ] text form : "+value+" has wrong format!"
+   msg="[ error : "+time.asctime()+" ] can't use "+letter_mark_pattern
    self.logging_msg(self.run_syslog,msg)
    sys.exit()
   
@@ -36,25 +36,25 @@ class Common_function(Help_manual,MySQL_ejun_common.Common_function):
       status=False
       break
     else: 
-     if int(ip_forms.group(index+1)) == 0:
+     if int(ip_forms.group(index+1)) <= 0:
       status=False
       break
    ### status (error case), sys exit()
    if not status:
-    msg="[ error : "+time.asctime()+" ] ip address : "+value+" has wrong format!"
+    msg="[ error : "+time.asctime()+" ] "+value+" is not correct ip address format"
     self.logging_msg(self.run_syslog,msg)
     sys.exit()
   else:
-   msg="[ error : "+time.asctime()+" ] ip address : "+value+" has wrong format!"
+   msg="[ error : "+time.asctime()+" ] "+value+" is not correct ip address format"
    self.logging_msg(self.run_syslog,msg)
    sys.exit()
   ### return the ip address
-  return value
+  return ip_forms.group(0)
 
  def int_number_format_confirm(self,value):
   if re.match(r'\d+',value):
    return int(value)
   else:
-   msg="[ error : "+time.asctime()+" ] this is not integer number : "+value
+   msg="[ error : "+time.asctime()+" ] "+value+" is "+str(type(value))
    self.logging_msg(self.run_syslog,msg)
    sys.exit()
