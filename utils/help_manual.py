@@ -19,9 +19,12 @@ class Help_manual(Telnet_function):
   print "             (1.S/W name) (2.management ip:port) (3.group name)"
   print "             (4.vendor name) (5.product name) (6.os verion)"
   print "             (7.the number of ports) (8.location) (9.description)\n"
+  print "  : deregister_switch (switch_id, uuid)"
+  print "          >> deregister the switch device in the database\n"
 
 
  function={"-h":show_manual,
            "--help":show_manual,
            "show_switch_list":Telnet_function.show_switch_list,
-           "register_switch":Telnet_function.register_switch}
+           "register_switch":Telnet_function.register_switch,
+           "deregister_switch":Telnet_function.deregister_switch}

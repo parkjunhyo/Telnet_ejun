@@ -122,3 +122,22 @@ class Telnet_function:
   switch_location = self.letter_status_confirm(values[7])
   switch_description = self.letter_status_confirm(values[8])
   return switch_name,switch_ip,switch_group_name,switch_vendor,switch_product,switch_os_version,switch_port,switch_location,switch_description
+
+ ### removing the data from database with uuid
+ def deregister_switch(self,values):
+  valid_values = self.confirm_input_number(values,[1])
+  self._delete_data_from_switch_table(valid_values)
+  self._delete_data_from_switch_property_table(valid_values)
+  self._delete_data_from_switch_status_table(valid_values)
+
+ def _delete_data_from_switch_table(self,values):
+  sending_msg = "delete from switch where id='"+values[0]+"';"
+  self.send_msg([self.database_name,sending_msg])
+
+ def _delete_data_from_switch_property_table(self,values):
+  sending_msg = "delete from switch_property where id='"+values[0]+"';"
+  self.send_msg([self.database_name,sending_msg])
+
+ def _delete_data_from_switch_status_table(self,values):
+  sending_msg = "delete from switch_status where id='"+values[0]+"';"
+  self.send_msg([self.database_name,sending_msg])
