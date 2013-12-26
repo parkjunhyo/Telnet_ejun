@@ -82,16 +82,34 @@ class Telnet_function:
    for entry in zip(self.tbentries_dict['switch'],search_values):
     search_msg = "select id from switch where "+entry[0]+"='"+entry[1]+"';"
     if self.send_msg([self.database_name,search_msg]):
-     msg="[ error : "+time.asctime()+" ] "+search_values+" has been alread assigned"
+     msg="[ error : "+time.asctime()+" ] "+str(search_values)+" has been alread assigned"
      self.logging_msg(self.run_syslog,msg)
      sys.exit()
 
-  ### uuid 
+  ### random uuid value find out
   switch_id = str(uuid.uuid4())
   while self.send_msg([self.database_name,"select id from switch where id='"+switch_id+"';"]):
    switch_id = str(uuid.uuid4())
-  print switch_id
-   
+
+  ### register the data into the database
+  self._insert_data_into_switch_table([switch_id]+valid_params_list[0:2])
+  self._insert_data_into_switch_property_table([switch_id]+valid_params_list[2:])
+  self._insert_data_into_switch_status_table([switch_id,'deactive'])
+
+ def _insert_data_into_switch_table(self,values):
+  uuid, name, ip = values
+  sending_msg = "insert into switch (id,name,ip) values ('"+uuid+"','"+name+"','"+ip+"');"
+  self.send_msg([self.database_name,sending_msg])
+
+ def _insert_data_into_switch_property_table(self,values):
+  uuid,group_name,vendor,product,os_version,port,location,description = values
+  sending_msg = "insert into switch_property (id,group_name,vendor,product,os_version,port,location,description) values ('"+uuid+"','"+group_name+"','"+vendor+"','"+product+"','"+os_version+"',"+str(port)+",'"+location+"','"+description+"');"
+  self.send_msg([self.database_name,sending_msg])
+
+ def _insert_data_into_switch_status_table(self,values):
+  uuid,status = values
+  sending_msg = "insert into switch_status (id,status) values ('"+uuid+"','"+status+"');"
+  self.send_msg([self.database_name,sending_msg])
  
  def _register_paramter_validation_check(self,values):
   switch_name = self.letter_status_confirm(values[0])
