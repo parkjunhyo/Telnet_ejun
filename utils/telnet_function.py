@@ -172,10 +172,11 @@ class Telnet_function(Plugin_manage):
   ### get information(data), name,ip,vendor,product,etc
   get_switch = self._get_data_from_switch_table(valid_values[0])
   get_switch_property = self._get_data_from_switch_property_table_by_uuid(get_switch['id'])
+  get_switch_access = self._get_data_from_switch_access_table_by_uuid(get_switch['id'])
   ### re-arrange the data
   plug_name = get_switch_property['vendor'].lower()
   ### run the matched plugin function
-  self.plugin_dict[plug_name]._show_run(self,get_switch,get_switch_property)
+  self.plugin_dict[plug_name]._show_run(self,get_switch,get_switch_property,get_switch_access)
 
  def _get_data_from_switch_table(self,values):
   search_condition = self.tbentries_dict['switch']
@@ -192,6 +193,13 @@ class Telnet_function(Plugin_manage):
   search_condition = self.tbentries_dict['switch_property']
   search_contents = ','.join(search_condition)
   sending_msg = "select "+search_contents+" from switch_property where id='"+values+"'"
+  search_result = self.send_msg([self.database_name,sending_msg])
+  return dict(zip(search_condition,list(search_result[0])))
+  
+ def _get_data_from_switch_access_table_by_uuid(self,values):
+  search_condition = self.tbentries_dict['switch_access']
+  search_contents = ','.join(search_condition)
+  sending_msg = "select "+search_contents+" from switch_access where id='"+values+"'"
   search_result = self.send_msg([self.database_name,sending_msg])
   return dict(zip(search_condition,list(search_result[0])))
   
