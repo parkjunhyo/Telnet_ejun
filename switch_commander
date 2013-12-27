@@ -1,0 +1,12 @@
+switch id VARCHAR(40) UNIQUE,
+switch name VARCHAR(40) UNIQUE,
+switch ip VARCHAR(40) UNIQUE,
+switch group_name VARCHAR(40),
+switch vendor VARCHAR(40), 
+switch product VARCHAR(40),
+switch os_version VARCHAR(40),
+switch port INT,
+switch location VARCHAR(40),
+switch description VARCHAR(40),
+switch_status id VARCHAR(40) UNIQUE,
+switch_status status VARCHAR(40)
