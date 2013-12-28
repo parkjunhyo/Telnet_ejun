@@ -7,4 +7,4 @@ from arista_arista_switch import Arista_arista_switch
 
 class Arista_manage(Arista_arista_switch):
 
- _model_dict={"arista":arista,}
+ _model_dict={"arista":Arista_arista_switch,}
